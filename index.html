@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sessiz Marmara İmza Kampanyası</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 700px; /* Daha geniş bir alan için */
+            width: 100%;
+        }
+        .sign-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .sign-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+        .sign-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .disabled-button {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .result-box {
+            background-color: #e2e8f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center; /* Ortala */
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .result-item {
+            flex: 1;
+            min-width: 150px; /* Tek bir öğe olduğu için daha geniş */
+            margin: 10px;
+        }
+        .message-box {
+            background-color: #fff3cd;
+            color: #664d03;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #ffecb5;
+            display: none; /* Varsayılan olarak gizli */
+            animation: fadeIn 0.5s forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .consent-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+        @media (max-width: 480px) {
+            .result-box {
+                flex-direction: column;
+            }
+            .result-item {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sessizlik Dergisi logosu eklendi -->
+        <img src="Adsız tasarım.png" alt="Sessizlik Dergisi Logo" class="mx-auto mb-6 max-w-[200px] h-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-4">Sessiz Marmara İmza Kampanyası</h1>
+        <p class="text-gray-700 mb-6 leading-relaxed">
+            Marmara Denizi, kirlilik nedeniyle ekolojik dengesini yitirmiş, canlılığını ve sesini kaybetmiştir. Bu sessizlik, aslında bir çığlıktır. Kampanyamız, Marmara Denizi'nin sessizliğini görsel ve metinsel olarak işleyerek, bu sessizliğin ardındaki acı gerçeği gözler önüne sermeyi ve toplumu harekete geçirmeyi hedeflemektedir.
+        </p>
+        <p class="text-gray-700 mb-8 leading-relaxed font-semibold">
+            "Marmara Denizi sessizliğe büründü. Bu sessizlik, bir çığlık. Onu duymak ve harekete geçmek için hala vaktimiz var."
+        </p>
+
+        <!-- Açık Rıza Metni -->
+        <div class="consent-box">
+            <h3 class="text-xl font-semibold text-gray-800 mb-3">Açık Rıza Metni</h3>
+            <p class="text-gray-700 text-sm mb-4">
+                Bu imza kampanyasına katılarak, Marmara Denizi'nin korunması ve iyileştirilmesi amacıyla düzenlenen bu projeyi desteklediğimi beyan ederim. Verdiğim imzanın, kampanyanın toplam imza sayısına dahil edilmesini ve kamuoyu farkındalığı yaratma çabalarında kullanılmasını kabul ederim. Kişisel verilerim (kullanıcı kimliği ve imza zamanı), yalnızca bu kampanyanın yürütülmesi ve sonuçlarının raporlanması amacıyla, ilgili yasal düzenlemelere uygun olarak işlenecektir. Bu veriler üçüncü taraflarla paylaşılmayacak ve kampanya sonunda silinecektir.
+            </p>
+            <div class="flex items-center justify-center">
+                <input type="checkbox" id="consentCheckbox" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
+                <label for="consentCheckbox" class="ml-2 text-gray-800 text-base font-medium select-none">Açık rıza metnini okudum ve onaylıyorum.</label>
+            </div>
+        </div>
+
+        <button id="signPetition" class="sign-button bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed">
+            İmza At
+        </button>
+
+        <div id="messageBox" class="message-box"></div>
+
+        <h2 class="text-2xl font-bold text-gray-800 mt-8 mb-4">Güncel İmza Sayısı</h2>
+        <div class="result-box">
+            <div class="result-item">
+                <p class="text-gray-700 font-semibold text-lg">Toplam İmza:</p>
+                <p id="signatureCountDisplay" class="text-5xl font-bold text-blue-600">0</p>
+            </div>
+        </div>
+        <p class="text-sm text-gray-500 mt-4">Kullanıcı ID'niz: <span id="userIdDisplay" class="font-mono text-gray-600">Yükleniyor...</span></p>
+    </div>
+
+    <!-- Firebase SDK'ları -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase yapılandırması - Kendi projenizin bilgileri buraya eklendi.
+        const firebaseConfig = {
+            apiKey: "AIzaSyDJunfV-gOCOA6xYt5sp8hV1_Io-eQn2Kg",
+            authDomain: "sessiz-marmara.firebaseapp.com",
+            projectId: "sessiz-marmara",
+            storageBucket: "sessiz-marmara.firebasestorage.app",
+            messagingSenderId: "841179379382",
+            appId: "1:841179379382:web:53c89e2eb871e688955817",
+            measurementId: "G-F1KR0G1ZES"
+        };
+
+        // Uygulama ID'si global değişkenlerden alınır.
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-signature-app';
+
+        let app;
+        let db;
+        let auth;
+        let userId = null; // Kullanıcı ID'si
+        let hasSigned = false; // Bu oturumda imza atılıp atılmadığını takip eder
+
+        // Firestore doküman referansları
+        const signaturesDocRef = () => doc(db, `artifacts/${appId}/public/data/marmara_signatures`, 'total_signatures');
+        const userSignatureStatusCollectionRef = (uid) => collection(db, `artifacts/${appId}/users/${uid}/user_signature_status`);
+
+        // HTML elementleri
+        const signPetitionButton = document.getElementById('signPetition');
+        const consentCheckbox = document.getElementById('consentCheckbox');
+        const signatureCountDisplay = document.getElementById('signatureCountDisplay');
+        const userIdDisplay = document.getElementById('userIdDisplay');
+        const messageBox = document.getElementById('messageBox');
+
+        // Mesaj kutusunu gösteren fonksiyon
+        function showMessage(message, type = 'warning') {
+            messageBox.textContent = message;
+            messageBox.className = 'message-box'; // Sınıfları sıfırla
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-800', 'border-green-200');
+            } else if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'text-red-800', 'border-red-200');
+            } else { // warning
+                messageBox.classList.add('bg-yellow-100', 'text-yellow-800', 'border-yellow-200');
+            }
+            messageBox.style.display = 'block';
+            setTimeout(() => {
+                messageBox.style.display = 'none';
+            }, 5000); // 5 saniye sonra gizle
+        }
+
+        // İmza butonunu devre dışı bırakma/etkinleştirme
+        function setSignButtonDisabled(disabled) {
+            signPetitionButton.disabled = disabled;
+            if (disabled) {
+                signPetitionButton.classList.add('disabled-button');
+            } else {
+                signPetitionButton.classList.remove('disabled-button');
+            }
+        }
+
+        // Firebase başlatma ve kimlik doğrulama
+        async function initializeFirebase() {
+            try {
+                if (!firebaseConfig.apiKey) {
+                    showMessage("Firebase yapılandırması eksik. Uygulama düzgün çalışmayabilir.", "error");
+                    return;
+                }
+                console.log("Firebase Config:", firebaseConfig);
+
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                onAuthStateChanged(auth, async (user) => {
+                    console.log("Kimlik Doğrulama Durumu Değişti:", user);
+                    if (user) {
+                        userId = user.uid;
+                        userIdDisplay.textContent = userId;
+                        await checkUserSignatureStatus(); // Kullanıcının daha önce imza atıp atmadığını kontrol et
+                        setupRealtimeSignaturesListener(); // İmza dinleyicisini başlat
+                    } else {
+                        console.log("Kullanıcı bulunamadı, anonim olarak giriş yapılıyor...");
+                        await signInAnonymously(auth);
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase başlatılırken hata oluştu:", error);
+                showMessage("Uygulama başlatılırken bir hata oluştu.", "error");
+            }
+        }
+
+        // Kullanıcının daha önce imza atıp atmadığını kontrol et
+        async function checkUserSignatureStatus() {
+            if (!userId) return;
+            try {
+                const userStatusDoc = doc(userSignatureStatusCollectionRef(userId), 'signed_status');
+                const docSnap = await getDoc(userStatusDoc);
+                if (docSnap.exists() && docSnap.data().signed === true) {
+                    hasSigned = true;
+                    setSignButtonDisabled(true);
+                    showMessage("Daha önce imza attınız. Teşekkür ederiz!", "success");
+                } else {
+                    hasSigned = false;
+                    // Eğer henüz imza atmadıysa, onay kutusu işaretli değilse butonu devre dışı bırak
+                    setSignButtonDisabled(!consentCheckbox.checked);
+                }
+            } catch (error) {
+                console.error("Kullanıcı imza durumu kontrol edilirken hata:", error);
+                showMessage("İmza durumu kontrol edilirken bir sorun oluştu.", "error");
+            }
+        }
+
+        // Firestore'dan imza sayılarını gerçek zamanlı dinleme
+        function setupRealtimeSignaturesListener() {
+            if (!db) return;
+            onSnapshot(signaturesDocRef(), (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    const currentCount = data.count || 0;
+                    signatureCountDisplay.textContent = currentCount;
+                } else {
+                    signatureCountDisplay.textContent = '0';
+                    console.log("İmza dokümanı henüz yok, sıfır olarak başlatılıyor.");
+                }
+            }, (error) => {
+                console.error("Gerçek zamanlı imza dinlenirken hata:", error);
+                showMessage("İmza sonuçları yüklenirken bir sorun oluştu.", "error");
+            });
+        }
+
+        // İmza atma fonksiyonu
+        async function signPetition() {
+            if (hasSigned) {
+                showMessage("Daha önce imza attınız. Sadece bir kez imza atabilirsiniz.", "warning");
+                return;
+            }
+            if (!consentCheckbox.checked) {
+                showMessage("İmza atmadan önce açık rıza metnini onaylamalısınız.", "warning");
+                return;
+            }
+            if (!userId) {
+                showMessage("Kullanıcı kimliği belirlenmedi. Lütfen sayfayı yenileyin.", "error");
+                return;
+            }
+
+            setSignButtonDisabled(true); // İmza butonunu geçici olarak devre dışı bırak
+            console.log("İmza atma işlemi başlatıldı.");
+
+            try {
+                // Kullanıcının imza attığını Firestore'a kaydet
+                const userStatusDoc = doc(userSignatureStatusCollectionRef(userId), 'signed_status');
+                console.log(`Kullanıcı imza durumu kaydediliyor: userId=${userId}`);
+                // userId bilgisini de dokümana ekliyoruz
+                await setDoc(userStatusDoc, { signed: true, timestamp: new Date(), userId: userId });
+                hasSigned = true; // Oturum için imza atıldı olarak işaretle
+                console.log("Kullanıcı oy durumu başarıyla kaydedildi.");
+
+                // Toplam imza sayısını güncelle
+                const currentSignaturesDoc = signaturesDocRef();
+                const docSnap = await getDoc(currentSignaturesDoc);
+
+                let currentCount = 0;
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    currentCount = data.count || 0;
+                    console.log("Mevcut imza sayısı (Firestore'dan):", data);
+                } else {
+                    console.log("İmza sayacı dokümanı henüz yok, yeni oluşturulacak.");
+                }
+
+                currentCount++;
+
+                console.log(`Güncellenmiş imza sayısı kaydediliyor: ${currentCount}`);
+                // Firestore'a güncel imza sayısını kaydet
+                await setDoc(currentSignaturesDoc, { count: currentCount }, { merge: true });
+                showMessage(`İmzanız başarıyla kaydedildi! Teşekkür ederiz.`, "success");
+                console.log("İmza sayısı başarıyla güncellendi.");
+
+            } catch (error) {
+                console.error("İmza kaydedilirken hata oluştu:", error);
+                showMessage("İmzanızı kaydederken bir sorun oluştu. Lütfen tekrar deneyin.", "error");
+                hasSigned = false; // Hata durumunda tekrar imza atmaya izin ver
+                setSignButtonDisabled(!consentCheckbox.checked); // Hata durumunda butonu tekrar etkinleştir
+            }
+        }
+
+        // Butona olay dinleyicisi ekle
+        signPetitionButton.addEventListener('click', signPetition);
+
+        // Onay kutusu değiştiğinde buton durumunu güncelle
+        consentCheckbox.addEventListener('change', () => {
+            if (!hasSigned) { // Eğer zaten imza atmadıysa
+                setSignButtonDisabled(!consentCheckbox.checked);
+            }
+        });
+
+        // Sayfa yüklendiğinde Firebase'i başlat
+        window.onload = initializeFirebase;
+    </script>
+</body>
+</html>
