@@ -25,7 +25,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 700px; /* Daha geniş bir alan için */
+            max-width: 700px;
             width: 100%;
         }
         .sign-button {
@@ -50,13 +50,13 @@
             border-radius: 10px;
             margin-top: 20px;
             display: flex;
-            justify-content: center; /* Ortala */
+            justify-content: center;
             align-items: center;
             flex-wrap: wrap;
         }
         .result-item {
             flex: 1;
-            min-width: 150px; /* Tek bir öğe olduğu için daha geniş */
+            min-width: 150px;
             margin: 10px;
         }
         .message-box {
@@ -66,7 +66,7 @@
             border-radius: 8px;
             margin-top: 20px;
             border: 1px solid #ffecb5;
-            display: none; /* Varsayılan olarak gizli */
+            display: none;
             animation: fadeIn 0.5s forwards;
         }
         @keyframes fadeIn {
@@ -82,6 +82,24 @@
             margin-top: 25px;
             margin-bottom: 25px;
         }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
         @media (max-width: 480px) {
             .result-box {
                 flex-direction: column;
@@ -95,8 +113,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Sessizlik Dergisi logosu eklendi -->
-        <img src="logo.png" alt="Sessizlik Dergisi Logo" class="mx-auto mb-6 max-w-[200px] h-auto">
+        <img src="Adsız tasarım.png" alt="Sessizlik Dergisi Logo" class="mx-auto mb-6 max-w-[200px] h-auto">
         <h1 class="text-3xl font-bold text-gray-800 mb-4">Sessiz Marmara İmza Kampanyası</h1>
         <p class="text-gray-700 mb-6 leading-relaxed">
             Marmara Denizi, kirlilik nedeniyle ekolojik dengesini yitirmiş, canlılığını ve sesini kaybetmiştir. Bu sessizlik, aslında bir çığlıktır. Kampanyamız, Marmara Denizi'nin sessizliğini görsel ve metinsel olarak işleyerek, bu sessizliğin ardındaki acı gerçeği gözler önüne sermeyi ve toplumu harekete geçirmeyi hedeflemektedir.
@@ -105,11 +122,25 @@
             "Marmara Denizi sessizliğe büründü. Bu sessizlik, bir çığlık. Onu duymak ve harekete geçmek için hala vaktimiz var."
         </p>
 
+        <!-- Kullanıcı Bilgileri Girişi -->
+        <div class="input-group">
+            <label for="fullName">Adınız Soyadınız:</label>
+            <input type="text" id="fullName" placeholder="Adınız Soyadınız" class="focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div class="input-group">
+            <label for="email">E-posta Adresiniz:</label>
+            <input type="email" id="email" placeholder="email@example.com" class="focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+        <div class="input-group">
+            <label for="city">Şehir / Bölge:</label>
+            <input type="text" id="city" placeholder="Örn: İstanbul" class="focus:ring-blue-500 focus:border-blue-500" required>
+        </div>
+
         <!-- Açık Rıza Metni -->
         <div class="consent-box">
             <h3 class="text-xl font-semibold text-gray-800 mb-3">Açık Rıza Metni</h3>
             <p class="text-gray-700 text-sm mb-4">
-                Bu imza kampanyasına katılarak, Marmara Denizi'nin korunması ve iyileştirilmesi amacıyla düzenlenen bu projeyi desteklediğimi beyan ederim. Verdiğim imzanın, kampanyanın toplam imza sayısına dahil edilmesini ve kamuoyu farkındalığı yaratma çabalarında kullanılmasını kabul ederim. Kişisel verilerim (kullanıcı kimliği ve imza zamanı), yalnızca bu kampanyanın yürütülmesi ve sonuçlarının raporlanması amacıyla, ilgili yasal düzenlemelere uygun olarak işlenecektir. Bu veriler üçüncü taraflarla paylaşılmayacak ve kampanya sonunda silinecektir.
+                Bu imza kampanyasına katılarak, Marmara Denizi'nin korunması ve iyileştirilmesi amacıyla düzenlenen bu projeyi desteklediğimi beyan ederim. Verdiğim imzanın, kampanyanın toplam imza sayısına dahil edilmesini ve kamuoyu farkındalığı yaratma çabalarında kullanılmasını kabul ederim. Adınız, soyadınız, e-posta adresiniz, şehir/bölge bilginiz ve kullanıcı kimliğiniz (ID'niz) ile imza zamanınız, yalnızca bu kampanyanın yürütülmesi ve sonuçlarının raporlanması amacıyla, ilgili yasal düzenlemelere uygun olarak işlenecektir. Bu veriler üçüncü taraflarla paylaşılmayacak ve kampanya sonunda silinecektir.
             </p>
             <div class="flex items-center justify-center">
                 <input type="checkbox" id="consentCheckbox" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
@@ -139,7 +170,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Firebase yapılandırması - Kendi projenizin bilgileri buraya eklendi.
+        // Firebase yapılandırması
         const firebaseConfig = {
             apiKey: "AIzaSyDJunfV-gOCOA6xYt5sp8hV1_Io-eQn2Kg",
             authDomain: "sessiz-marmara.firebaseapp.com",
@@ -150,44 +181,43 @@
             measurementId: "G-F1KR0G1ZES"
         };
 
-        // Uygulama ID'si global değişkenlerden alınır.
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-signature-app';
 
         let app;
         let db;
         let auth;
-        let userId = null; // Kullanıcı ID'si
-        let hasSigned = false; // Bu oturumda imza atılıp atılmadığını takip eder
+        let userId = null;
+        let hasSigned = false;
 
-        // Firestore doküman referansları
         const signaturesDocRef = () => doc(db, `artifacts/${appId}/public/data/marmara_signatures`, 'total_signatures');
         const userSignatureStatusCollectionRef = (uid) => collection(db, `artifacts/${appId}/users/${uid}/user_signature_status`);
 
-        // HTML elementleri
+        // Yeni HTML elementleri
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const cityInput = document.getElementById('city');
         const signPetitionButton = document.getElementById('signPetition');
         const consentCheckbox = document.getElementById('consentCheckbox');
         const signatureCountDisplay = document.getElementById('signatureCountDisplay');
         const userIdDisplay = document.getElementById('userIdDisplay');
         const messageBox = document.getElementById('messageBox');
 
-        // Mesaj kutusunu gösteren fonksiyon
         function showMessage(message, type = 'warning') {
             messageBox.textContent = message;
-            messageBox.className = 'message-box'; // Sınıfları sıfırla
+            messageBox.className = 'message-box';
             if (type === 'success') {
                 messageBox.classList.add('bg-green-100', 'text-green-800', 'border-green-200');
             } else if (type === 'error') {
                 messageBox.classList.add('bg-red-100', 'text-red-800', 'border-red-200');
-            } else { // warning
+            } else {
                 messageBox.classList.add('bg-yellow-100', 'text-yellow-800', 'border-yellow-200');
             }
             messageBox.style.display = 'block';
             setTimeout(() => {
                 messageBox.style.display = 'none';
-            }, 5000); // 5 saniye sonra gizle
+            }, 5000);
         }
 
-        // İmza butonunu devre dışı bırakma/etkinleştirme
         function setSignButtonDisabled(disabled) {
             signPetitionButton.disabled = disabled;
             if (disabled) {
@@ -197,7 +227,6 @@
             }
         }
 
-        // Firebase başlatma ve kimlik doğrulama
         async function initializeFirebase() {
             try {
                 if (!firebaseConfig.apiKey) {
@@ -215,8 +244,8 @@
                     if (user) {
                         userId = user.uid;
                         userIdDisplay.textContent = userId;
-                        await checkUserSignatureStatus(); // Kullanıcının daha önce imza atıp atmadığını kontrol et
-                        setupRealtimeSignaturesListener(); // İmza dinleyicisini başlat
+                        await checkUserSignatureStatus();
+                        setupRealtimeSignaturesListener();
                     } else {
                         console.log("Kullanıcı bulunamadı, anonim olarak giriş yapılıyor...");
                         await signInAnonymously(auth);
@@ -228,7 +257,6 @@
             }
         }
 
-        // Kullanıcının daha önce imza atıp atmadığını kontrol et
         async function checkUserSignatureStatus() {
             if (!userId) return;
             try {
@@ -238,10 +266,24 @@
                     hasSigned = true;
                     setSignButtonDisabled(true);
                     showMessage("Daha önce imza attınız. Teşekkür ederiz!", "success");
+                    // Eğer kullanıcı daha önce imza atmışsa, input alanlarını doldur ve devre dışı bırak
+                    const userData = docSnap.data();
+                    fullNameInput.value = userData.fullName || '';
+                    emailInput.value = userData.email || '';
+                    cityInput.value = userData.city || '';
+                    fullNameInput.disabled = true;
+                    emailInput.disabled = true;
+                    cityInput.disabled = true;
+                    consentCheckbox.checked = true; // Onay kutusunu da işaretle
+                    consentCheckbox.disabled = true; // Onay kutusunu da devre dışı bırak
                 } else {
                     hasSigned = false;
-                    // Eğer henüz imza atmadıysa, onay kutusu işaretli değilse butonu devre dışı bırak
-                    setSignButtonDisabled(!consentCheckbox.checked);
+                    setSignButtonDisabled(!consentCheckbox.checked || !isFormValid());
+                    // Input alanlarını etkinleştir
+                    fullNameInput.disabled = false;
+                    emailInput.disabled = false;
+                    cityInput.disabled = false;
+                    consentCheckbox.disabled = false;
                 }
             } catch (error) {
                 console.error("Kullanıcı imza durumu kontrol edilirken hata:", error);
@@ -249,7 +291,6 @@
             }
         }
 
-        // Firestore'dan imza sayılarını gerçek zamanlı dinleme
         function setupRealtimeSignaturesListener() {
             if (!db) return;
             onSnapshot(signaturesDocRef(), (docSnap) => {
@@ -267,6 +308,14 @@
             });
         }
 
+        // Form alanlarının geçerliliğini kontrol eden fonksiyon
+        function isFormValid() {
+            return fullNameInput.value.trim() !== '' &&
+                   emailInput.value.trim() !== '' &&
+                   emailInput.checkValidity() && // E-posta formatını kontrol eder
+                   cityInput.value.trim() !== '';
+        }
+
         // İmza atma fonksiyonu
         async function signPetition() {
             if (hasSigned) {
@@ -277,24 +326,35 @@
                 showMessage("İmza atmadan önce açık rıza metnini onaylamalısınız.", "warning");
                 return;
             }
+            if (!isFormValid()) {
+                showMessage("Lütfen tüm alanları doğru ve eksiksiz doldurun.", "warning");
+                return;
+            }
             if (!userId) {
                 showMessage("Kullanıcı kimliği belirlenmedi. Lütfen sayfayı yenileyin.", "error");
                 return;
             }
 
-            setSignButtonDisabled(true); // İmza butonunu geçici olarak devre dışı bırak
+            setSignButtonDisabled(true);
             console.log("İmza atma işlemi başlatıldı.");
 
             try {
-                // Kullanıcının imza attığını Firestore'a kaydet
                 const userStatusDoc = doc(userSignatureStatusCollectionRef(userId), 'signed_status');
                 console.log(`Kullanıcı imza durumu kaydediliyor: userId=${userId}`);
-                // userId bilgisini de dokümana ekliyoruz
-                await setDoc(userStatusDoc, { signed: true, timestamp: new Date(), userId: userId });
-                hasSigned = true; // Oturum için imza atıldı olarak işaretle
-                console.log("Kullanıcı oy durumu başarıyla kaydedildi.");
 
-                // Toplam imza sayısını güncelle
+                const userData = {
+                    signed: true,
+                    timestamp: new Date(),
+                    userId: userId,
+                    fullName: fullNameInput.value.trim(),
+                    email: emailInput.value.trim(),
+                    city: cityInput.value.trim()
+                };
+
+                await setDoc(userStatusDoc, userData);
+                hasSigned = true;
+                console.log("Kullanıcı imza durumu başarıyla kaydedildi.");
+
                 const currentSignaturesDoc = signaturesDocRef();
                 const docSnap = await getDoc(currentSignaturesDoc);
 
@@ -310,26 +370,40 @@
                 currentCount++;
 
                 console.log(`Güncellenmiş imza sayısı kaydediliyor: ${currentCount}`);
-                // Firestore'a güncel imza sayısını kaydet
                 await setDoc(currentSignaturesDoc, { count: currentCount }, { merge: true });
                 showMessage(`İmzanız başarıyla kaydedildi! Teşekkür ederiz.`, "success");
                 console.log("İmza sayısı başarıyla güncellendi.");
 
+                // İmza atıldıktan sonra input alanlarını devre dışı bırak
+                fullNameInput.disabled = true;
+                emailInput.disabled = true;
+                cityInput.disabled = true;
+                consentCheckbox.disabled = true;
+
             } catch (error) {
                 console.error("İmza kaydedilirken hata oluştu:", error);
                 showMessage("İmzanızı kaydederken bir sorun oluştu. Lütfen tekrar deneyin.", "error");
-                hasSigned = false; // Hata durumunda tekrar imza atmaya izin ver
-                setSignButtonDisabled(!consentCheckbox.checked); // Hata durumunda butonu tekrar etkinleştir
+                hasSigned = false;
+                setSignButtonDisabled(!consentCheckbox.checked || !isFormValid());
             }
         }
 
         // Butona olay dinleyicisi ekle
         signPetitionButton.addEventListener('click', signPetition);
 
-        // Onay kutusu değiştiğinde buton durumunu güncelle
+        // Input alanları ve onay kutusu değiştiğinde buton durumunu güncelle
+        fullNameInput.addEventListener('input', () => {
+            if (!hasSigned) setSignButtonDisabled(!consentCheckbox.checked || !isFormValid());
+        });
+        emailInput.addEventListener('input', () => {
+            if (!hasSigned) setSignButtonDisabled(!consentCheckbox.checked || !isFormValid());
+        });
+        cityInput.addEventListener('input', () => {
+            if (!hasSigned) setSignButtonDisabled(!consentCheckbox.checked || !isFormValid());
+        });
         consentCheckbox.addEventListener('change', () => {
-            if (!hasSigned) { // Eğer zaten imza atmadıysa
-                setSignButtonDisabled(!consentCheckbox.checked);
+            if (!hasSigned) {
+                setSignButtonDisabled(!consentCheckbox.checked || !isFormValid());
             }
         });
 
